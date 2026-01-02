@@ -246,10 +246,10 @@ flowchart LR
   FA <--> |"MCP upstream"| S4["...more MCP servers..."]
 
   subgraph R["fast-agent responsibilities"]
-    D["discover_tools / tool_search\n(compact tool cards)"]
-    L["learn_tool\n(fetch 1 schema on-demand)"]
-    E["execute_tool\n(proxy tools/call)"]
-    P["policy: allowlist/denylist\n+ caching + limits"]
+    D["discover_tools / tool_search (compact tool cards)"]
+    L["learn_tool (fetch 1 schema on-demand)"]
+    E["execute_tool (proxy tools/call)"]
+    P["policy: allowlist/denylist + caching + limits"]
   end
 
   FA -.-> D
