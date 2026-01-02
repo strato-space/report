@@ -233,3 +233,24 @@ A proxy/runtime approach (like fast-agent issue #589) is the strategic fix:
 - enables programmatic orchestration when needed
 
 If the MCP world is a bazaar, this is the part where we stop carrying the entire bazaar in our pockets.
+
+## Tiny diagram: client ↔ fast-agent ↔ upstream MCP servers
+
+```mermaid
+flowchart LR
+  C[Client / IDE<br/>(Claude Code, etc.)] <-->|MCP: tools/list + tools/call| FA[fast-agent<br/>MCP Proxy + Advanced Tool Use]
+  FA <-->|MCP upstream| S1[Google Sheets MCP]
+  FA <-->|MCP upstream| S2[Google Calendar MCP]
+  FA <-->|MCP upstream| S3[Todoist MCP]
+  FA <-->|MCP upstream| S4[...more MCP servers...]
+
+  subgraph FA_BOX[fast-agent responsibilities]
+    D[discover_tools / tool_search<br/>(compact tool cards)]
+    L[learn_tool<br/>(fetch 1 schema on-demand)]
+    E[execute_tool<br/>(proxy tools/call)]
+    P[policy: allowlist/denylist<br/>+ caching + limits]
+  end
+
+  FA --- FA_BOX
+```
+
