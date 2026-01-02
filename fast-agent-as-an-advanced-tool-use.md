@@ -36,6 +36,9 @@ Token cost is not the only issue: common failures are wrong tool selection and i
 
 Phase 1 is static config-based filtration (see section below); the long-term path is Advanced Tool Use (on-demand discovery + selective schema loading).
 
+### “Static config-based filtration” (Phase 1, policy controls)
+Centralized tool allowlists in `fastagent.config.yaml` using AgentCard semantics (per-server allowlist + glob patterns). This gives immediate token savings without protocol changes.
+
 ### “Systemic architecture”: Advanced Tool Use (on-demand discovery + selective schema loading)
 Anthropic’s “Advanced Tool Use” pattern is essentially:
 - Provide a **search tool** over tools
@@ -73,9 +76,9 @@ fast-agent-proxy then:
 
 ---
 
-# static config-based filtration
+## static config-based filtration
 
-Phase 1 (policy controls in #589): add static `tools` filtering in `fastagent.config.yaml` with the same semantics as AgentCard (per-server allowlist, names or glob patterns; omitted means “allow all”).
+Phase 1 (policy controls in #589): add static `tools` filtering in `fastagent.config.yaml` with the same semantics as AgentCard (per-server allowlist, names or glob patterns; omitted means “allow all”).\nSee: /home/strato-space/fast-agent/plan/agent-card-rfc.md
 
 ### 1) “Local scalpel”: allowlist / include-tools (per server)
 This is what issue #58 asks for: add `--include-tools` or `ENABLED_TOOLS` so the server filters its own `tools/list` response.
@@ -109,7 +112,7 @@ mcp:
 - Good security posture (least privilege)
 
 **Cons**
-- Requires changes in every MCP server
+- Requires changes in every MCP server if implemented server-side (centralized filtering in fast-agent avoids this)
 - Still upfront-loads schemas for allowed tools (which can still be heavy)
 - Doesn’t scale well when you have *many* servers and want dynamic selection
 
