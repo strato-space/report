@@ -18,6 +18,15 @@ See: https://github.com/xing5/mcp-google-sheets/issues/58
 Anthropic describes the same systemic pattern and frames it as **tool definition bloat**. Their examples show multi-server setups costing **~55k tokens** upfront (and even **134k** in internal cases) — before conversation starts. Their core recommendation: **stop loading all tool definitions upfront; move to on-demand discovery and selective loading.**  
 See: https://www.anthropic.com/engineering/advanced-tool-use
 
+Example breakdown from the Anthropic article (five-server setup, ~55k tokens upfront):
+- GitHub: 35 tools (~26k tokens)
+- Slack: 11 tools (~21k tokens)
+- Sentry: 5 tools (~3k tokens)
+- Grafana: 5 tools (~3k tokens)
+- Splunk: 2 tools (~2k tokens)
+
+Token cost is not the only issue: common failures are wrong tool selection and incorrect parameters, especially when tools have similar names like `notification-send-user` vs `notification-send-channel`.
+
 ![Context usage: Traditional vs. Tool Search Tool](https://www.anthropic.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Ff359296f770706608901eadaffbff4ca0b67874c-1999x1125.png&w=3840&q=75)
 *Source: https://www.anthropic.com/engineering/advanced-tool-use (figure: Context Usage: Traditional vs. Tool Search Tool).*
 
@@ -123,6 +132,7 @@ Returns compact “tool cards”:
 - (optional) 1–2 key parameters
 
 This keeps discovery cheap and searchable.
+The proxy only hydrates full schemas for the selected tools, keeping everything else deferred.
 
 ### 2) `learn_tool(server, tool)`
 Returns the **full JSON schema** (and optionally examples) for *one* tool on demand.
@@ -185,6 +195,8 @@ Anthropic’s “Programmatic Tool Calling” pattern pushes orchestration into 
 - execute orchestration code locally
 - call upstream tools repeatedly
 - return only the final distilled result to the model
+
+Real-world example from Anthropic: Claude for Excel uses programmatic tool calling to operate over large spreadsheets without flooding the context window.
 
 This is not required for the MVP, but it’s a powerful second step once discovery/learn/execute is in place.
 
