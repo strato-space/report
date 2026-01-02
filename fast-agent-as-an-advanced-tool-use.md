@@ -238,19 +238,24 @@ If the MCP world is a bazaar, this is the part where we stop carrying the entire
 
 ```mermaid
 flowchart LR
-  C[Client / IDE<br/>(Claude Code, etc.)] <-->|MCP: tools/list + tools/call| FA[fast-agent<br/>MCP Proxy + Advanced Tool Use]
-  FA <-->|MCP upstream| S1[Google Sheets MCP]
-  FA <-->|MCP upstream| S2[Google Calendar MCP]
-  FA <-->|MCP upstream| S3[Todoist MCP]
-  FA <-->|MCP upstream| S4[...more MCP servers...]
+  C["Client / IDE\n(Claude Code, etc.)"] <--> |"MCP: tools/list + tools/call"| FA["fast-agent\nMCP Proxy + Advanced Tool Use"]
 
-  subgraph FA_BOX[fast-agent responsibilities]
-    D[discover_tools / tool_search<br/>(compact tool cards)]
-    L[learn_tool<br/>(fetch 1 schema on-demand)]
-    E[execute_tool<br/>(proxy tools/call)]
-    P[policy: allowlist/denylist<br/>+ caching + limits]
+  FA <--> |"MCP upstream"| S1["Google Sheets MCP"]
+  FA <--> |"MCP upstream"| S2["Google Calendar MCP"]
+  FA <--> |"MCP upstream"| S3["Todoist MCP"]
+  FA <--> |"MCP upstream"| S4["...more MCP servers..."]
+
+  subgraph R["fast-agent responsibilities"]
+    D["discover_tools / tool_search\n(compact tool cards)"]
+    L["learn_tool\n(fetch 1 schema on-demand)"]
+    E["execute_tool\n(proxy tools/call)"]
+    P["policy: allowlist/denylist\n+ caching + limits"]
   end
 
-  FA --- FA_BOX
+  FA -.-> D
+  FA -.-> L
+  FA -.-> E
+  FA -.-> P
+
 ```
 
