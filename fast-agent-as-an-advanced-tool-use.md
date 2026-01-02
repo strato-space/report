@@ -4,7 +4,6 @@
 - **Motivating example (mcp-google-sheets):** https://github.com/xing5/mcp-google-sheets/issues/58  
 - **Reference (Anthropic):** https://www.anthropic.com/engineering/advanced-tool-use  
 - **Related concept source (mcp-agent):** https://github.com/lastmile-ai/mcp-agent
-- **Article: Fast-agent as an “Advanced Tool Use” MCP Proxy: discover → learn → execute**: https://github.com/strato-space/report/blob/main/fast-agent-as-an-advanced-tool-use.md 
 
 ---
 
@@ -277,6 +276,7 @@ Assumptions:
   → ~1–2k tokens upfront
 - during a typical task, only a few tool schemas are “hydrated” on demand (2–4 tools)
   → ~2–5k tokens on-demand (depends on schema verbosity)
+Exact numbers vary by schema verbosity, but the structural win is eliminating unused tool schemas from the initial context.
 
 **Typical session cost:** ~3–7k tokens (vs ~30–32k upfront)
 
