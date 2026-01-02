@@ -18,6 +18,9 @@ See: https://github.com/xing5/mcp-google-sheets/issues/58
 Anthropic describes the same systemic pattern and frames it as **tool definition bloat**. Their examples show multi-server setups costing **~55k tokens** upfront (and even **134k** in internal cases) — before conversation starts. Their core recommendation: **stop loading all tool definitions upfront; move to on-demand discovery and selective loading.**  
 See: https://www.anthropic.com/engineering/advanced-tool-use
 
+![Context usage: Traditional vs. Tool Search Tool](https://www.anthropic.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Ff359296f770706608901eadaffbff4ca0b67874c-1999x1125.png&w=3840&q=75)
+*Source: https://www.anthropic.com/engineering/advanced-tool-use (figure: Context Usage: Traditional vs. Tool Search Tool).*
+
 ---
 
 ## Two solution families (and why we want both)
@@ -280,4 +283,3 @@ Assumptions:
 ### Savings summary
 - Upfront reduction: ~30k → ~1–2k (≈ 93–97% less upfront)
 - Typical session reduction: ~30–32k → ~3–7k (≈ 75–90% less overall)
-
