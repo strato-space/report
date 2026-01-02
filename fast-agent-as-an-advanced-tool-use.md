@@ -4,6 +4,7 @@
 **Motivating example (mcp-google-sheets):** https://github.com/xing5/mcp-google-sheets/issues/58  
 **Reference (Anthropic):** https://www.anthropic.com/engineering/advanced-tool-use  
 **Related concept source (mcp-agent):** https://github.com/lastmile-ai/mcp-agent
+**Fast-agent as an “Advanced Tool Use” MCP Proxy: discover → learn → execute** 
 
 ---
 
