@@ -259,3 +259,25 @@ flowchart LR
 
 ```
 
+## Token savings estimate (rule-of-thumb)
+
+### Baseline (direct MCP servers)
+Using real-world numbers reported in the MCP ecosystem:
+- Google Sheets MCP: ~13k tokens upfront (17 tools)
+- Google Calendar MCP: ~15k tokens upfront
+- Todoist MCP: ~3k tokens upfront
+**Total upfront:** ~31k tokens (≈ “30k upfront”)
+
+### With fast-agent as an Advanced Tool Use proxy
+Assumptions:
+- fast-agent exposes only 3–5 small meta-tools (tool_search / learn_tool / execute_tool / list_servers)
+  → ~1–2k tokens upfront
+- during a typical task, only a few tool schemas are “hydrated” on demand (2–4 tools)
+  → ~2–5k tokens on-demand (depends on schema verbosity)
+
+**Typical session cost:** ~3–7k tokens (vs ~30–32k upfront)
+
+### Savings summary
+- Upfront reduction: ~30k → ~1–2k (≈ 93–97% less upfront)
+- Typical session reduction: ~30–32k → ~3–7k (≈ 75–90% less overall)
+
