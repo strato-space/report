@@ -1,9 +1,10 @@
-# Fast-agent as an “Advanced Tool Use” MCP Proxy: discover → learn → execute (without tool-schema context bloat)
+# Fast-agent as an “Advanced Tool Use” runtime for MCP: static config-based filtration + dynamic discover/learn/execute + MCP-proxy mode to reduce tool context bloat (#589)
 
 - **Tracking issue (fast-agent):** https://github.com/evalstate/fast-agent/issues/589  
 - **Motivating example (mcp-google-sheets):** https://github.com/xing5/mcp-google-sheets/issues/58  
 - **Reference (Anthropic):** https://www.anthropic.com/engineering/advanced-tool-use  
 - **Related concept source (mcp-agent):** https://github.com/lastmile-ai/mcp-agent
+- **Scope (fast-agent #589):** Fast-agent as an “Advanced Tool Use” runtime for MCP: static config-based filtration + dynamic discover/learn/execute + MCP-proxy mode to reduce tool context bloat
 
 ---
 
@@ -24,20 +25,9 @@ See: https://www.anthropic.com/engineering/advanced-tool-use
 
 ## Two solution families (and why we want both)
 
-### 1) “Local scalpel”: allowlist / include-tools (per server)
-This is what issue #58 asks for: add `--include-tools` or `ENABLED_TOOLS` so the server filters its own `tools/list` response.
+Phase 1 is static config-based filtration (see section below); the long-term path is Advanced Tool Use (on-demand discovery + selective schema loading).
 
-**Pros**
-- Simple
-- Works with any client
-- Good security posture (least privilege)
-
-**Cons**
-- Requires changes in every MCP server
-- Still upfront-loads schemas for allowed tools (which can still be heavy)
-- Doesn’t scale well when you have *many* servers and want dynamic selection
-
-### 2) “Systemic architecture”: Advanced Tool Use (on-demand discovery + selective schema loading)
+### “Systemic architecture”: Advanced Tool Use (on-demand discovery + selective schema loading)
 Anthropic’s “Advanced Tool Use” pattern is essentially:
 - Provide a **search tool** over tools
 - **Defer loading** detailed schemas until the model actually needs them
@@ -73,6 +63,46 @@ fast-agent-proxy then:
 - Pulls full tool schemas **only when needed**
 
 ---
+
+# static config-based filtration
+
+Phase 1: it is enough to add static `tools` filtering in `fastagent.config.yaml` with the same semantics as AgentCard (per-server allowlist, names or glob patterns; omitted means “allow all”).
+
+### 1) “Local scalpel”: allowlist / include-tools (per server)
+This is what issue #58 asks for: add `--include-tools` or `ENABLED_TOOLS` so the server filters its own `tools/list` response.
+
+Examples (fastagent.config.yaml):
+
+```yaml
+mcp:
+  servers:
+    github:
+      command: "npx"
+      args: ["-y", "@modelcontextprotocol/server-github"]
+      tools: ["search_repositories", "list_issues", "get_file"]
+```
+
+```yaml
+mcp:
+  servers:
+    slack:
+      url: "https://slack-mcp.example.com/mcp"
+      tools: ["conversations_*", "chat_postMessage"]
+    filesystem:
+      command: "npx"
+      args: ["-y", "@modelcontextprotocol/server-filesystem", "."]
+      tools: ["read_file", "list_*"]
+```
+
+**Pros**
+- Simple
+- Works with any client
+- Good security posture (least privilege)
+
+**Cons**
+- Requires changes in every MCP server
+- Still upfront-loads schemas for allowed tools (which can still be heavy)
+- Doesn’t scale well when you have *many* servers and want dynamic selection
 
 ## The “discover → learn → execute” interface
 
@@ -172,6 +202,7 @@ These are complementary approaches; fast-agent can borrow the best ideas while f
 
 ### Config
 - fast-agent reads a config describing upstream MCP servers (commands, args, env)
+- Phase 1: add static `tools` filtering in `fastagent.config.yaml` with the same semantics as AgentCard
 - add optional allowlist/denylist per server
 - add optional tool metadata/examples per tool
 
