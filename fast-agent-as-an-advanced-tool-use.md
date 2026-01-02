@@ -66,7 +66,7 @@ fast-agent-proxy then:
 
 # static config-based filtration
 
-Phase 1: it is enough to add static `tools` filtering in `fastagent.config.yaml` with the same semantics as AgentCard (per-server allowlist, names or glob patterns; omitted means “allow all”).
+Phase 1 (policy controls in #589): add static `tools` filtering in `fastagent.config.yaml` with the same semantics as AgentCard (per-server allowlist, names or glob patterns; omitted means “allow all”).
 
 ### 1) “Local scalpel”: allowlist / include-tools (per server)
 This is what issue #58 asks for: add `--include-tools` or `ENABLED_TOOLS` so the server filters its own `tools/list` response.
@@ -103,6 +103,12 @@ mcp:
 - Requires changes in every MCP server
 - Still upfront-loads schemas for allowed tools (which can still be heavy)
 - Doesn’t scale well when you have *many* servers and want dynamic selection
+
+### Issue strategy (phased)
+
+- Phase 1: static `tools` filtering in `fastagent.config.yaml` (AgentCard semantics) to reduce initial schema load without protocol changes
+- Phase 2: `discover/learn/execute` meta-tools + on-demand schema hydration + caching in proxy mode
+- Phase 3: Tool Use Examples + Programmatic Tool Calling to improve correctness and reduce context churn
 
 ## The “discover → learn → execute” interface
 
