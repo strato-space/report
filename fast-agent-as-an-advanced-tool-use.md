@@ -238,7 +238,7 @@ If the MCP world is a bazaar, this is the part where we stop carrying the entire
 
 ```mermaid
 flowchart LR
-  C["Client / IDE\n(Claude Code, etc.)"] <--> |"MCP: tools/list + tools/call"| FA["fast-agent\nMCP Proxy + Advanced Tool Use"]
+  C["Client / IDE\n(Claude Code, etc.)"] <--> |"MCP: tools/list + tools/call"| FA["fast-agent-mcp-proxy"]
 
   FA <--> |"MCP upstream"| S1["Google Sheets MCP"]
   FA <--> |"MCP upstream"| S2["Google Calendar MCP"]
