@@ -1,11 +1,10 @@
 # Fast-agent as an “Advanced Tool Use” MCP Proxy: discover → learn → execute (without tool-schema context bloat)
 
-**Tracking issue (fast-agent):** https://github.com/evalstate/fast-agent/issues/589  
-**Motivating example (mcp-google-sheets):** https://github.com/xing5/mcp-google-sheets/issues/58  
-**Reference (Anthropic):** https://www.anthropic.com/engineering/advanced-tool-use  
-**Related concept source (mcp-agent):** https://github.com/lastmile-ai/mcp-agent
-
-**Fast-agent as an “Advanced Tool Use” MCP Proxy: discover → learn → execute**: https://github.com/strato-space/report/blob/main/fast-agent-as-an-advanced-tool-use.md 
+- **Tracking issue (fast-agent):** https://github.com/evalstate/fast-agent/issues/589  
+- **Motivating example (mcp-google-sheets):** https://github.com/xing5/mcp-google-sheets/issues/58  
+- **Reference (Anthropic):** https://www.anthropic.com/engineering/advanced-tool-use  
+- **Related concept source (mcp-agent):** https://github.com/lastmile-ai/mcp-agent
+- **Article: Fast-agent as an “Advanced Tool Use” MCP Proxy: discover → learn → execute**: https://github.com/strato-space/report/blob/main/fast-agent-as-an-advanced-tool-use.md 
 
 ---
 
